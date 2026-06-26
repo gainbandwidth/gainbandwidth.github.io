@@ -1,6 +1,6 @@
 baseURL: "https://gainbandwidth.github.io/"
 locale: "zh"
-title: "GainBandwidth's Blog"
+title: "顾博文的技术博客"
 theme: "PaperMod"
 paginate: 10
 
@@ -31,9 +31,9 @@ taxonomies:
 # 站点参数
 params:
   env: production
-  title: "GainBandwidth's Blog"
-  description: "一个计算机学生的技术博客 —— 记录学习、项目与思考"
-  author: "GainBandwidth"
+  title: "顾博文的技术博客"
+  description: "东南大学信息与通信工程硕士 —— 记录大模型、AI Agent 与技术成长"
+  author: "顾博文"
 
   # 默认显示设置
   defaultTheme: auto # 自动切换亮/暗色模式
@@ -49,15 +49,15 @@ params:
 
   # 首页布局
   homeInfoParams:
-    Title: "Hi there \U0001F44B"
-    Content: "欢迎来到我的博客！这里记录我的学习笔记、项目经历和技术思考。"
+    Title: "Hi, I'm Bowen \U0001F44B"
+    Content: "欢迎来到我的博客！我是东南大学信息与通信工程专业的硕士生，研究方向为大模型与 AI Agent。这里记录我的学习笔记、项目经历和技术思考。"
 
   # 社交链接（按需修改）
   socialIcons:
     - name: github
       url: "https://github.com/gainbandwidth"
     - name: email
-      url: "mailto:your-email@example.com"
+      url: "mailto:220240948@seu.edu.cn"
 
   # 搜索
   fuseOpts:

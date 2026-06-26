@@ -3,19 +3,34 @@ title: "\U0001F464 关于我"
 ShowToc: false
 ---
 
-你好！我是一名计算机专业的学生。
+你好！我是**顾博文**，东南大学信息与通信工程专业硕士研究生（2024.9 – 2027.6），本科同样就读于东南大学信息工程专业（2020.9 – 2024.6）。
 
-这个博客用来记录我的学习过程、项目经历和一些个人思考。
+硕士期间排名 7/585（前 2%），曾获一等学业奖学金和学术先进个人称号；本科期间排名 10/210（前 5%），曾获校长奖学金、优秀奖学金和三好学生荣誉。
+
+## 研究方向
+
+我的研究聚焦于**大语言模型（LLM）与 AI Agent**，具体包括：
+
+- 无线布图生成与优化方法研究（学位论文方向）
+- MoE 稀疏架构大模型的训练与对齐
+- 基于状态维护的智能体系统设计
+- 垂直领域 RAG 问答系统
+
+## 实习经历
+
+**华为技术有限公司 · 南京研究所**（2026.5 – 2026.6）
+AI 工程师 — ICT BG 数据通信产品线
+
+- 参与多域（设备域、网络域、用户界面域）AI 隐私保护能力建设
+- 参与 AI 赋能检视工作流构建，通过跨域数据整合与错误反馈机制提升检测准确性
 
 ## 技术栈
 
-在这里列出你熟悉的技术栈，例如：
-
-- **语言**: Python, Java, C/C++, JavaScript
-- **框架**: React, Spring Boot, Django
-- **工具**: Git, Docker, Linux
+- **大模型与智能计算**：Python、PyTorch、HuggingFace Transformers、PEFT、LLM 应用开发
+- **系统与工具**：Linux、LangChain、LangGraph、Agent 工具链、模型部署、vLLM 推理优化
+- **专业领域**：知识图谱构建、分布式训练、时延/吞吐优化、内存管理
 
 ## 联系方式
 
 - GitHub: [github.com/gainbandwidth](https://github.com/gainbandwidth)
-- Email: your-email@example.com
+- Email: [220240948@seu.edu.cn](mailto:220240948@seu.edu.cn)
