@@ -13,6 +13,10 @@ Thumbs.db
 *.swo
 *~
 
+# Project source (keep blog repo clean)
+NeckSnake/
+gobang-python/
+
 # Temp
 /tmp/
 *.log
