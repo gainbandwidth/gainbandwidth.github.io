@@ -9,59 +9,88 @@ tags:
   - MCP
   - Python
   - Textual
+  - MewCode
 categories:
   - AI Agent
-summary: "基于 LLM-in-a-loop 架构的终端编码助手，五层架构设计，支持 25+ 内置工具、MCP 协议、多智能体协作、上下文压缩与长期记忆。"
+summary: "轻量级终端 Coding Agent，基于 ReAct 与 Plan Mode 双模式驱动 LLM 自主完成编程任务，五层分层架构，支持多模型、MCP、Skill、跨会话记忆、多 Agent 协作。"
 ShowToc: true
 ---
 
-## 项目简介
+## 项目概览
 
-MewCode 是一个**终端 AI 编码助手**，采用 LLM-in-a-loop 架构：模型自主推理任务、调用工具、处理结果并迭代循环，直到任务完成。项目对标 Claude Code，从零用 Python 实现了完整的编码智能体系统。
+**技术栈**：Python, MCP, ReAct, Skill, Multi-Agent
 
-## 五层架构设计
+轻量级终端 Coding Agent，基于 ReAct 与 Plan Mode 双模式驱动 LLM 自主完成编程任务。交互、引擎、工具、记忆、安全五层分层架构，支持 Anthropic、OpenAI 双协议、MCP 工具扩展、Skill 技能包、跨会话记忆、多 Agent 并行协作。
 
-系统采用严格的五层分层架构，各层职责清晰：
+## 五层架构
 
-### 交互层（Interaction）
+```
+┌─────────────────────────────────────────────┐
+│  交互层：CLI (Textual TUI)、Slash Command、Skill │
+├─────────────────────────────────────────────┤
+│  引擎层：对话模块、Agent 循环、System Prompt      │
+├─────────────────────────────────────────────┤
+│  工具层：25+ 内置工具、MCP 协议、Hook 生命周期     │
+├─────────────────────────────────────────────┤
+│  记忆层：上下文压缩、会话持久化、自动记忆提取       │
+├─────────────────────────────────────────────┤
+│  安全层：权限拦截、路径沙箱、Human-in-the-Loop     │
+└─────────────────────────────────────────────┘
+```
 
-基于 [Textual](https://github.com/Textualize/textual) 构建终端 TUI 界面，支持斜杠命令系统、技能（Skill）加载、会话恢复等交互能力。自定义 `NoAltScreenDriver` 去除终端备用屏幕转义码，使所有输出保留在终端滚动历史中。
+## 个人职责
 
-### 引擎层（Engine）
+- 独立负责五层分层架构设计与全部核心技术决策，借助 Claude Code 完成模块编码与调试
+- 设计并实现跨会话记忆系统，包括 JSONL 持久化、LLM 自动记忆提取与项目指令文件分级加载
+- 负责核心技术方案选型，包括多 LLM 协议适配、上下文两层压缩策略、MCP 工具延迟加载与 Skill 技能体系方案
 
-- **Agent 循环**：核心编排器，流式接收 LLM 响应 → 收集工具调用 → 按并发安全性分批执行 → 将结果回注 → 循环迭代
-- **多模型支持**：统一的 `StreamEvent` 协议，同时支持 Anthropic（Messages API）、OpenAI（Responses API）和 OpenAI 兼容接口（Chat Completions API），切换模型只需改配置
-- **Prompt 构建**：优先级排序的 `PromptBuilder`，包含身份、系统环境、任务规范、工具使用、代码风格等多个 Section
-- **Token 追踪**：锚点（Anchor）机制——每次 API 返回真实 token 数作为锚点，仅对新增消息做字符估算，实现近零开销的精确 token 跟踪
+## 技术亮点
 
-### 工具层（Tool）
+### MCP 工具延迟加载
+MCP 工具注册时只传名称不传完整 schema，LLM 按需通过 ToolSearch 发现后再加载完整定义，**百级工具场景下工具描述 Token 占用减少 85%**，避免上下文窗口被工具定义挤占。
 
-- **25+ 内置工具**：Bash、ReadFile、WriteFile、EditFile、Glob、Grep、Agent、AskUser、LoadSkill、ToolSearch 等
-- **并发分批执行**：`partition_tool_calls()` 将连续的安全工具调用归入并行批次，非安全工具顺序执行
-- **流式执行**：工具可在 LLM 流式输出过程中提前开始执行，无需等待完整响应
-- **MCP 延迟加载**：MCP 工具仅注册名称，LLM 需调用 `ToolSearch` 加载完整 schema，在工具密集场景下减少约 85% 的上下文 token 开销
-- **Hook 生命周期**：支持 `startup`、`turn_start`、`pre_tool_use`、`post_tool_use` 等 10 个生命周期事件的自定义 Shell 钩子
+### 多 LLM 协议适配
+统一 Anthropic、OpenAI 两套不同的流式响应协议为同一套内部事件接口（StreamEvent），**新增 LLM 供应商只需适配一个接口**。
 
-### 记忆层（Memory）
+### 两层上下文压缩
+设计两层渐进式上下文压缩策略：Layer 1 每轮无条件落盘裁剪零 LLM 调用，Layer 2 在 80% 阈值时触发全量摘要，自动对齐 Function Calling 调用配对约束，**支持数小时连续编程会话不丢失关键上下文**。
 
-- **自动记忆提取**：每隔 N 轮对话，异步调用 LLM 从对话中提取四类记忆：用户偏好、纠正反馈、项目知识、参考资料
-- **JSONL 持久化**：记忆按类别存储在 `.mewcode/memory/` 目录，跨会话持久保存
-- **Recall 预取**：每次用户消息前，通过 LLM 侧查询相关记忆并注入为系统提示，保持上下文连续性
-- **两层上下文压缩**：
-  - Layer 1：工具结果预算管控（字符截断 + 磁盘持久化），零 LLM 调用
-  - Layer 2：达到上下文窗口 80% 阈值时，触发全对话摘要压缩，保留可配置长度的尾部原文
+### 五层权限拦截
+覆盖命令拦截、路径沙箱、规则引擎、权限模式、人工确认的五层纵深权限模型，**任一层拒绝即终止操作，支持 Agent 全自动模式安全执行**。
 
-### 安全层（Security）
+### 自动记忆提取
+每轮对话结束后异步调 LLM 回顾对话内容，自动将用户偏好、纠正反馈、项目知识、参考信息四类记忆分类持久化到独立文件，**跨会话知识持续累积，同类错误纠正一次后自动规避，新会话自动继承项目上下文无需重复交代**。
 
-五级权限拦截链：危险命令检测 → 路径沙箱 → 规则引擎（用户/项目/本地三级规则） → 权限模式（default/accept-edits/plan/bypass） → 人工确认。任一层级均可拒绝操作，"始终允许"会生成本地规则用于后续会话。
+### 多 Agent 协作
+将复杂任务拆分给多个 Agent 并行处理，基于 Git Worktree 实现文件级隔离避免编辑冲突，Coordinator Agent 只负责任务拆分与结果汇总不参与编码，**突破单 Agent 上下文窗口瓶颈，大型任务处理效率成倍提升**。
 
-## 多智能体协作
+## 子模块详解
 
-- **子智能体派生**：通过 `Agent` 工具将子任务委派给专用子智能体（如 explore、plan 类型），在后台 `asyncio.Task` 中异步运行
-- **团队系统**：`TeamCreate` 创建命名团队，成员通过邮箱机制通信，TUI 实时显示各智能体状态
-- **Git Worktree 隔离**：并行智能体使用 `git worktree` 实现文件级隔离，避免编辑冲突
-- **Coordinator 模式**：特殊的协调者 prompt，限制主智能体只做任务分解和结果聚合，不直接编码
-- **多种启动后端**：支持进程内（inprocess）、iTerm2 新标签页、tmux 面板三种启动方式
+本项目按模块拆解为以下系列文章，分为**骨架篇**（核心引擎）和**进阶篇**（扩展能力）两部分。
+
+### 骨架篇：核心引擎七大模块
+
+| # | 模块 | 文章 |
+|---|------|------|
+| 1 | 开口说话 | [让 LLM 开口说话：对话模块与多协议适配](/posts/2026/06/mewcode-01-first-words/) |
+| 2 | 工具系统 | [工具系统：25+ 内置工具与并发分批执行](/posts/2026/06/mewcode-02-tool-system/) |
+| 3 | Agent 循环 | [Agent 循环：ReAct 与 Plan Mode 双模式驱动](/posts/2026/06/mewcode-03-agent-loop/) |
+| 4 | System Prompt | [System Prompt 设计：优先级排序的 PromptBuilder](/posts/2026/06/mewcode-04-system-prompt/) |
+| 5 | 权限系统 | [五层权限拦截：从命令检测到 Human-in-the-Loop](/posts/2026/06/mewcode-05-permissions/) |
+| 6 | MCP | [MCP 协议集成：延迟加载与工具生态扩展](/posts/2026/06/mewcode-06-mcp/) |
+| 7 | 上下文管理 | [两层上下文压缩：数小时会话不丢失](/posts/2026/06/mewcode-07-context/) |
+
+### 进阶篇：从单 Agent 到多 Agent
+
+| # | 模块 | 文章 |
+|---|------|------|
+| 8 | 记忆系统 | [跨会话记忆：自动提取、JSONL 持久化与 Recall 预取](/posts/2026/06/mewcode-08-memory/) |
+| 9 | Slash Command | [Slash Command：斜杠命令系统与交互设计](/posts/2026/06/mewcode-09-slash-command/) |
+| 10 | Skill | [Skill 技能包：Markdown 驱动的标准化操作流程](/posts/2026/06/mewcode-10-skill/) |
+| 11 | Hook | [Hook 系统：10 个生命周期事件的 Shell 钩子](/posts/2026/06/mewcode-11-hook/) |
+| 12 | SubAgent | [SubAgent：子智能体派生与异步执行](/posts/2026/06/mewcode-12-subagent/) |
+| 13 | Worktree | [Git Worktree 隔离：并行 Agent 的文件级安全](/posts/2026/06/mewcode-13-worktree/) |
+| 14 | Agent Teams | [Agent Teams：团队协作与 Coordinator 模式](/posts/2026/06/mewcode-14-teams/) |
 
 ## 技术栈
 
