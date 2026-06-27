@@ -1,0 +1,42 @@
+{{- $scratch := newScratch }}
+
+{{- if not .Date.IsZero -}}
+    {{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default ":date_long" site.Params.DateFormat)))) }}
+{{- end }}
+
+{{/* CJK-aware word count and reading time */}}
+{{- $plainText := .Plain }}
+{{- $cjkChars := len (findRE "[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]" $plainText) }}
+{{- $cjkReadingSpeed := 350 }}
+
+{{- if (.Param "ShowReadingTime") -}}
+    {{- $readingTime := 1 }}
+    {{- if gt $cjkChars 0 }}
+        {{- $readingTime = int (math.Ceil (div (float $cjkChars) $cjkReadingSpeed)) }}
+    {{- else }}
+        {{- $readingTime = .ReadingTime }}
+    {{- end }}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "read_time" $readingTime | default (printf "%d min" $readingTime)))) }}
+{{- end }}
+
+{{- if (.Param "ShowWordCount") -}}
+    {{- $wordCount := .WordCount }}
+    {{- if gt $cjkChars 0 }}
+        {{- $nonCJK := replaceRE "[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]" "" $plainText }}
+        {{- $englishWords := len (findRE "[a-zA-Z]+" $nonCJK) }}
+        {{- $wordCount = add $cjkChars $englishWords }}
+    {{- end }}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "words" $wordCount | default (printf "%d words" $wordCount)))) }}
+{{- end }}
+
+{{- if not (.Param "hideAuthor") -}}
+    {{- with (partial "author.html" .) }}
+        {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" .)) }}
+    {{- end }}
+{{- end }}
+
+{{/* Combine all meta information into a single string with separators and render it as HTML.*/}}
+
+{{- with ($scratch.Get "meta") }}
+    {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
+{{- end -}}

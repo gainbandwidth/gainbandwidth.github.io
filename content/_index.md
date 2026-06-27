@@ -3,6 +3,8 @@ title: ""
 ShowToc: false
 ---
 
+Hi, I'm Bowen. 东南大学信息与通信工程硕士，研究方向为大模型与 AI Agent。这里记录我的项目和笔记。
+
 ## 精选项目
 
 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin:16px 0;">
