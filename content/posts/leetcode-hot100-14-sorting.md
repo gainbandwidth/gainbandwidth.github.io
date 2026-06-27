@@ -3,7 +3,7 @@ title: "Hot 100 刷题笔记（十四）：排序算法与补充题"
 date: 2025-01-14
 draft: false
 categories: [LeetCode]
-tags: [排序, 快速排序, 归并排序, 堆排序, 逆序对, 算法, Python]
+tags: [LeetCode, 排序, 快速排序, 归并排序, 堆排序, 逆序对, 算法, Python]
 summary: "经典排序算法实现（快排、堆排、归并）+ 逆序对、字符串乘法、基本计算器等补充题。"
 ShowToc: true
 ---

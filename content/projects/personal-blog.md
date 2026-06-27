@@ -1,6 +1,7 @@
 ---
 title: "示例项目：个人博客系统"
 date: 2026-06-26
+weight: 7
 draft: false
 tags:
   - Hugo

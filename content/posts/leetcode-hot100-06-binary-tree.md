@@ -3,7 +3,7 @@ title: "Hot 100 刷题笔记（六）：二叉树"
 date: 2025-01-06
 draft: false
 categories: [LeetCode]
-tags: [二叉树, DFS, BFS, 二叉搜索树, 算法, Python]
+tags: [LeetCode, 二叉树, DFS, BFS, 二叉搜索树, 算法, Python]
 summary: "LeetCode Hot 100 二叉树专题：遍历、最大深度、验证 BST、路径总和、最近公共祖先、最大路径和。"
 ShowToc: true
 ---

@@ -3,7 +3,7 @@ title: "Hot 100 刷题笔记（十一）：贪心算法"
 date: 2025-01-11
 draft: false
 categories: [LeetCode]
-tags: [贪心, 买卖股票, 跳跃游戏, 算法, Python]
+tags: [LeetCode, 贪心, 买卖股票, 跳跃游戏, 算法, Python]
 summary: "LeetCode Hot 100 贪心专题：买卖股票系列（一次/多次/冷冻期/k 次）、跳跃游戏、划分字母区间。"
 ShowToc: true
 ---

@@ -49,8 +49,8 @@ params:
 
   # 首页布局
   homeInfoParams:
-    Title: "Hi, I'm Bowen \U0001F44B"
-    Content: "欢迎来到我的博客！我是东南大学信息与通信工程专业的硕士生，研究方向为大模型与 AI Agent。这里记录我的学习笔记、项目经历和技术思考。"
+    Title: "Hi, I'm Bowen"
+    Content: "东南大学信息与通信工程硕士，研究方向为大模型与 AI Agent。这里记录我的项目和笔记。"
 
   # 社交链接（按需修改）
   socialIcons:
@@ -77,34 +77,22 @@ params:
 # 菜单导航
 menu:
   main:
-    - identifier: search
-      name: "\U0001F50D 搜索"
-      url: search
-      weight: 5
-    - identifier: posts
-      name: "\U0001F4DD 博客"
-      url: posts/
-      weight: 10
     - identifier: projects
-      name: "\U0001F6E0\U000FE0F 项目"
+      name: "项目"
       url: projects/
+      weight: 10
+    - identifier: posts
+      name: "笔记"
+      url: posts/
       weight: 20
-    - identifier: essays
-      name: "\U0001F4AD 随笔"
-      url: essays/
-      weight: 30
-    - identifier: resources
-      name: "\U0001F4DA 资源"
-      url: resources/
-      weight: 40
-    - identifier: archives
-      name: "\U0001F5C3\U000FE0F 归档"
-      url: archives/
-      weight: 50
     - identifier: about
-      name: "\U0001F464 关于"
+      name: "关于"
       url: about/
-      weight: 60
+      weight: 30
+    - identifier: search
+      name: "搜索"
+      url: search
+      weight: 40
 
 # Markdown 渲染
 markup:

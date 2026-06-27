@@ -1,6 +1,7 @@
 ---
 title: "无线布图生成与优化方法研究"
 date: 2026-05-01
+weight: 1
 draft: false
 tags:
   - 知识图谱

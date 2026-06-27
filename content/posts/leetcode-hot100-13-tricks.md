@@ -3,7 +3,7 @@ title: "Hot 100 刷题笔记（十三）：技巧与数学"
 date: 2025-01-13
 draft: false
 categories: [LeetCode]
-tags: [位运算, 数学, 快速幂, 组合数, 算法, Python]
+tags: [LeetCode, 位运算, 数学, 快速幂, 组合数, 算法, Python]
 summary: "LeetCode Hot 100 技巧专题：异或、Boyer-Moore 投票、荷兰国旗、快速幂、组合数计算、拒绝采样。"
 ShowToc: true
 ---

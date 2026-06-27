@@ -1,6 +1,7 @@
 ---
 title: "基于状态维护的智能体系统"
 date: 2026-03-01
+weight: 3
 draft: false
 tags:
   - Agent

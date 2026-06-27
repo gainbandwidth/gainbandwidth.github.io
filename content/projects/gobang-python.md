@@ -1,6 +1,7 @@
 ---
 title: "Gobang-Python —— AI 五子棋对战"
 date: 2025-09-01
+weight: 6
 draft: false
 tags:
   - Python

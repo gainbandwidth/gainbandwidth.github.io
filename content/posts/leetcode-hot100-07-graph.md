@@ -3,7 +3,7 @@ title: "Hot 100 刷题笔记（七）：图论"
 date: 2025-01-07
 draft: false
 categories: [LeetCode]
-tags: [图论, DFS, BFS, 拓扑排序, Dijkstra, 并查集, 算法, Python]
+tags: [LeetCode, 图论, DFS, BFS, 拓扑排序, Dijkstra, 并查集, 算法, Python]
 summary: "LeetCode Hot 100 图论专题：岛屿数量、拓扑排序、Trie、二分图判定、最小生成树、Dijkstra 最短路径。"
 ShowToc: true
 ---

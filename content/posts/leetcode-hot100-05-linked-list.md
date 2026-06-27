@@ -3,7 +3,7 @@ title: "Hot 100 刷题笔记（五）：链表"
 date: 2025-01-05
 draft: false
 categories: [LeetCode]
-tags: [链表, 反转链表, LRU, 算法, Python]
+tags: [LeetCode, 链表, 反转链表, LRU, 算法, Python]
 summary: "LeetCode Hot 100 链表专题：反转链表、环形链表、合并链表、K 个一组翻转、LRU/LFU 缓存。"
 ShowToc: true
 ---

@@ -1,6 +1,7 @@
 ---
 title: "垂直领域 RAG 问答系统"
 date: 2025-08-01
+weight: 4
 draft: false
 tags:
   - RAG

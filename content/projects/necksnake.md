@@ -1,6 +1,7 @@
 ---
 title: "NeckSnake —— 用头部动作控制贪吃蛇"
 date: 2025-07-01
+weight: 5
 draft: false
 tags:
   - MediaPipe

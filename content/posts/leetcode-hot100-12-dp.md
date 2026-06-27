@@ -3,7 +3,7 @@ title: "Hot 100 刷题笔记（十二）：动态规划"
 date: 2025-01-12
 draft: false
 categories: [LeetCode]
-tags: [动态规划, 背包, LIS, LCS, 编辑距离, 算法, Python]
+tags: [LeetCode, 动态规划, 背包, LIS, LCS, 编辑距离, 算法, Python]
 summary: "LeetCode Hot 100 动态规划专题：打家劫舍、零钱兑换、LIS、LCS、编辑距离、最长回文子串、最长有效括号。"
 ShowToc: true
 ---
